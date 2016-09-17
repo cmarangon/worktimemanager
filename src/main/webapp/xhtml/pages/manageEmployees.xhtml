@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{manageEmployeesBean.onLoad()}" />
+        </f:metadata>
+
+
+
+        <div class="col-xs-12 col-lg-12">
+            <div class="page-content">
+                <h:form styleClass="form-horizontal">
+                    <h:dataTable class="table table-hover"
+                        value="#{manageEmployeesBean.allEmployees}"
+                        var="employee">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.manage_employee_firstname}" />
+                            </f:facet>
+
+                            <h:inputText value="#{employee.firstName}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.manage_employee_lastname}" />
+                            </f:facet>
+
+                            <h:inputText value="#{employee.lastName}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.manage_employee_email}" />
+                            </f:facet>
+
+                            <h:inputText value="#{employee.email}" />
+                        </h:column>
+                        <h:column>
+                            <h:commandButton
+                                action="#{manageEmployeesBean.modifyEmployee(employee)}"
+                                value="#{texts.manage_employee_button_modify}" />
+                        </h:column>
+                        <h:column>
+                            <h:commandButton
+                                action="#{manageEmployeesBean.deactivateEmployee(employee)}"
+                                value="#{texts.manage_employee_button_deactivate}" />
+                        </h:column>
+                        <h:column>
+                            <h:commandButton
+                                action="#{manageEmployeesBean.modifyEmploymentPeriod(employee)}"
+                                value="#{texts.manage_employee_button_update_employment_period}" />
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+                <h:form>
+                    <h:commandButton
+                        action="#{manageEmployeesBean.newEmployee}"
+                        value="#{texts.manage_employee_button_new}" />
+                </h:form>
+            </div>
+        </div>
+
+
+        <div class="col-xs-12 col-lg-12">
+            <h:panelGroup
+                rendered="#{not manageEmployeesBean.alteringEmploymentPeriod}">
+                <div class="col-xs-6 col-lg-6">
+                    <div class="page-content">
+                        <h:form styleClass="form-horizontal">
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_lastName}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_lastName_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.lastName}"
+                                        a:required="true" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_firstName}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_firstName_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.firstName}"
+                                        a:required="true" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_birthDate}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText id="birthday"
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_birthDate_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.birthDate}"
+                                        a:required="true">
+
+                                        <h:message for="birthday"
+                                            errorClass="errorMessage"
+                                            infoClass="infoMessage"
+                                            showDetail="true"
+                                            showSummary="false" />
+
+                                        <f:convertDateTime
+                                            pattern="dd.MM.yyyy" />
+                                    </h:inputText>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_email}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_email_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.email}"
+                                        a:required="true" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_password}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_password_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.password}"
+                                        a:required="true" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_street}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_street_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.street}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_postalCode}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_postalCode_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.postalCode}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_country}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_country_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.country}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_privatePhoneNumber}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_privatePhoneNumber_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.privatePhoneNumber}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_businessPhoneNumber}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        styleClass="form-control"
+                                        a:placeholder="#{texts.manage_employees_businessPhoneNumber_placeholder}"
+                                        value="#{manageEmployeesBean.selectedPerson.businessPhoneNumber}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-6 col-lg-5"
+                                    value="#{texts.manage_employees_supervisor}"></h:outputLabel>
+
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:selectOneMenu
+                                        value="#{manageEmployeesBean.selectedPerson.supervisor}"
+                                        style="input-group"
+                                        styleClass="form-control">
+                                        <f:selectItems
+                                            value="#{manageEmployeesBean.allEmployees}"
+                                            var="person"
+                                            itemLabel="#{person.email}"
+                                            itemValue="#{person}" />
+                                        <f:converter
+                                            converterId="ch.hftm.wtm.customConverter.PersonConverter" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+
+                            <h:panelGroup>
+                                <div class="form-group">
+                                    <div class="col-xs-5 col-lg-5">
+                                        <div class="btn-toolbar">
+                                            <h:commandButton
+                                                id="submitButton"
+                                                value="#{texts.manage_employees_submit}"
+                                                action="#{manageEmployeesBean.submit}"
+                                                styleClass="btn btn-info btn-sm" />
+                                            <h:message
+                                                for="submitButton" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+
+                            <h:panelGroup
+                                rendered="#{not empty facesContext.messageList}"
+                                class="alert alert-danger" role="alert"
+                                layout="block">
+                                <h:messages globalOnly="false"
+                                    errorClass="errorMessage"
+                                    infoClass="infoMessage"
+                                    layout="table" showDetail="false"
+                                    showSummary="true" />
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup
+                rendered="#{manageEmployeesBean.alteringEmploymentPeriod}">
+                <div class="col-xs-6 col-lg-6">
+                    <div class="page-content">
+                        <ui:include src="manageEmploymentPeriods.xhtml"></ui:include>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
+    </ui:define>
+</ui:composition>

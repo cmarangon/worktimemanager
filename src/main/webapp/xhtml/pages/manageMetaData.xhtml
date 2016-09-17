@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{manageMetaDataBean.onLoad()}" />
+        </f:metadata>
+
+        <h:form role="form">
+            <div class="page-tables">
+                <div class="page-tables">
+                    <div class="col-xs-6 col-lg-6">
+                        <h:outputLabel>
+                            <H4>#{texts.unvalidated_abcenses_overview}</H4>
+                        </h:outputLabel>
+                        <div class="table-responsive">
+                            <div class="form-group">
+                                <h:outputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{texts.manage_Meta_Data_backwardEntryModification}" />
+
+                                <h:inputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{manageMetaDataBean.currentMasterData.backwardEntryModification}" />
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{texts.manage_Meta_Data_defailtlAnnualVacationDays}" />
+
+                                <h:inputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{manageMetaDataBean.currentMasterData.defaultAnnualVacationDays}" />
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{texts.manage_Meta_Data_DefaultDailyWorkingHours}" />
+
+                                <h:inputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{manageMetaDataBean.currentMasterData.defaultDailyWorkingHours}" />
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{texts.manage_Meta_Data_DefaultOvertimeMax}" />
+
+                                <h:inputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{manageMetaDataBean.currentMasterData.defaultOvertimeMaximum}" />
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{texts.manage_Meta_Data_EndFiscalYear}" />
+
+                                <h:inputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{manageMetaDataBean.currentMasterData.endFiscalYear}" />
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{texts.manage_Meta_Data_startFiscalYear}" />
+
+                                <h:inputText
+                                    styleClass="col-xs-6 col-lg-6"
+                                    value="#{manageMetaDataBean.currentMasterData.startFiscalYear}" />
+
+                            </div>
+
+                            <h:commandButton
+                                value="#{texts.manage_employment_period_submit}"
+                                action="#{manageMetaDataBean.submit()}"
+                                styleClass="btn btn-info btn-sm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+    <title>#{pageTitle}</title>
+
+    <link rel="shortcut icon" type="image/x-icon"
+        href="#{resource['style/css/images/favicon.ico']}" />
+
+    <!-- Stylesheets laden -->
+
+    <h:outputStylesheet name="style/css/steps.css" />
+    <h:outputStylesheet name="style/css/bootstrap.css" />
+    <h:outputStylesheet name="style/css/jquery.gritter.css" />
+    <h:outputStylesheet name="style/css/jquery.onoff.css" />
+    <h:outputStylesheet name="style/css/font-awesome.min.css" />
+    <h:outputStylesheet name="style/css/less-style.css" />
+    <h:outputStylesheet name="style/css/style.css" />
+    <h:outputStylesheet name="style/css/overrides.css" />
+    <h:outputStylesheet name="style/css/wtm.css" />
+    <h:outputStylesheet name="style/css/bootstrap-datetimepicker.min.css" />
+
+    <!-- Stylesheets laden ende -->
+</h:head>
+
+<f:view locale="#{languageBean.locale}">
+    <h:body>
+
+        <ui:insert name="structure" id="structure" />
+
+        <!-- Scripts laden -->
+        <script type="text/javascript">
+            var texts = [];
+            <ui:repeat value="#{translationBean.getJavascriptTexts()}" var="text">
+                texts['#{text.key}'] = '#{text.value}';
+            </ui:repeat>
+        </script>
+        <h:outputScript library="js" name="jquery.js" />
+        <h:outputScript library="js" name="moment-with-locales.min.js" />
+        <h:outputScript library="js" name="bootstrap-datetimepicker.js" />
+        <h:outputScript library="js" name="bootstrap.min.js" />
+        <h:outputScript library="js" name="jquery-ui.min.js" />
+        <h:outputScript library="js" name="wysihtml5-0.3.0.js" />
+        <h:outputScript library="js" name="prettify.js" />
+        <h:outputScript library="js" name="bootstrap-wysihtml5.min.js" />
+        <h:outputScript library="js" name="jquery.validate.js" />
+        <h:outputScript library="js" name="jquery.steps.min.js" />
+        <h:outputScript library="js" name="jquery.knob.js" />
+        <h:outputScript library="js" name="jquery.slimscroll.min.js" />
+        <h:outputScript library="js" name="jquery.dataTables.min.js" />
+        <h:outputScript library="js" name="jquery.prettyPhoto.js" />
+        <h:outputScript library="js" name="jquery.rateit.min.js" />
+        <h:outputScript library="js" name="jquery.onoff.min.js" />
+        <h:outputScript library="js" name="fullcalendar.min.js" />
+        <h:outputScript library="js" name="jquery.gritter.min.js" />
+        <h:outputScript library="js" name="respond.min.js" />
+        <h:outputScript library="js" name="html5shiv.js" />
+        <h:outputScript library="js" name="custom.js" />
+        <!-- Scripts laden ende -->
+
+    </h:body>
+</f:view>
+
+
+</html>

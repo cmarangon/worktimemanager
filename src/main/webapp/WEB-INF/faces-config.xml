@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+
+    <application>
+        <locale-config>
+            <default-locale>de</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>bundles.texts</base-name>
+            <var>texts</var>
+        </resource-bundle>
+        <message-bundle>bundles.messages</message-bundle>
+<!--         <message-bundle>ValidationMessages</message-bundle> -->
+    </application>
+
+    <converter>
+        <converter-id>personConverter</converter-id>
+        <converter-class>ch.hftm.wtm.customConverter.PersonConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>fiscalPeriodTypeConverter</converter-id>
+        <converter-class>ch.hftm.wtm.customConverter.FiscalPeriodTypeConverter</converter-class>
+    </converter>
+
+</faces-config>

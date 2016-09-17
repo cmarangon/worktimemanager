@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{loginBean.onLoad}" />
+        </f:metadata>
+
+        <h:form role="form">
+            <div class="container">
+            <h1>Stempelung korrigieren</h1>
+                
+                <!-- Form page -->
+                            <div class="page-form">
+                                <!-- Form Content -->
+                                <h:form class="form-horizontal" role="form">
+                                
+                <!-- Start DateTimepicker -->
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Zeitstempel</label>
+                    <div class="col-lg-10">
+                        <div
+                                class='input-group date datetime_picker'
+                                id=''>
+                                <h:inputText type='text'
+                                    class="form-control"
+                                    value="#{manageStampingBean.stampingDateTime}">
+                                    <f:convertDateTime
+                                        pattern="dd.MM.yyyy HH:mm" />
+                                </h:inputText>
+                                <span class="input-group-addon">
+                                    <span
+                                    class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                    </div>
+                 </div>
+                 <!-- DateTimepicker Ende -->
+                <br/><br/>
+                                    <div class="form-group">
+                                    
+                                        <label class="col-lg-2 control-label">Kommentar</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control" rows="3" placeholder="Kommentar"></textarea>
+                                        </div>
+                                    </div>    
+                <br/><br/>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                           <div class="btn-toolbar">
+                                           
+                    
+                    <h:commandButton
+                        value="Speichern"
+                        action="#{manageStampingBean.saveChangeStamping}"
+                        styleClass="btn btn-info btn-sm" />
+
+
+                    <h:commandButton
+                        value="Löschen"
+                        action="#{manageStampingBean.deleteStamping}"
+                        styleClass="btn btn-info btn-sm" />
+                        
+                        <h:commandButton
+                        value="Abbrechen"
+                        action="#{manageStampingBean.cancelChangeStamping}"
+                        styleClass="btn btn-info btn-sm" />
+                </div>
+                
+                                        </div>  
+                                    </div>
+                                </h:form>
+          </div> <!-- Form page end -->
+                <br />
+                
+            </div>
+            <hr />
+
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

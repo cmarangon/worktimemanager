@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:p="http://primefaces.org/ui">
+    
+    #{manageEmploymentPeriodsBean.onLoad()}
+    
+    <div class="page-tables">
+        <div class="table-responsive">
+            <div class="col-xs-12 col-lg-12">
+                <div class="form-group">
+                    <h:form>
+                        <h:panelGroup styleClass="col-xs-6 col-lg-5">
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <div class="col-xs-12 col-lg-12">
+                <h:form styleClass="form-horizontal" id="infoForm">
+                    <div class="form-group">
+                        <h:selectOneMenu id="test"
+                            styleClass="form-control"
+                            value="#{manageEmploymentPeriodsBean.selectedEmploymentPeriod}">
+                            <f:selectItem itemLabel="Neu" />
+                            <f:selectItems id="DropDown"
+                                value="#{manageEmploymentPeriodsBean.allEmploymentPeriods}"
+                                var="employmentPeriod"
+                                itemValueAsString="#{employmentPeriod.id}"
+                                itemLabel="#{employmentPeriod.validFrom} - #{employmentPeriod.validTo}">
+                            </f:selectItems>
+
+                            <f:converter
+                                converterId="ch.hftm.wtm.customConverter.EmploymentPeriodConverter" />
+
+                            <f:ajax event="change"
+                                render="employmentPercent overtime yearlyVacation dailyWorkingHours"
+                                execute="test"
+                                listener="#{manageEmploymentPeriodsBean.listener}" />
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-xs-6 col-lg-5"
+                            value="#{texts.manage_employment_period_Percentage}"></h:outputLabel>
+
+                        <div class="col-xs-6 col-lg-5">
+                            <h:inputText id="employmentPercent"
+                                styleClass="form-control"
+                                a:placeholder="#{texts.manage_employment_period_Percentage_placeholder}"
+                                value="#{manageEmploymentPeriodsBean.selectedEmploymentPeriod.employmentLevelPercent}"
+                                a:required="true"
+                                converter="javax.faces.Integer" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-xs-6 col-lg-5"
+                            value="#{texts.manage_employment_period_Overtime}"></h:outputLabel>
+
+                        <div class="col-xs-6 col-lg-5">
+                            <h:inputText styleClass="form-control"
+                                id="overtime"
+                                a:placeholder="#{texts.manage_employment_period_Overtime_placeholder}"
+                                value="#{manageEmploymentPeriodsBean.selectedEmploymentPeriod.maxOvertime}"
+                                a:required="true">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:inputText>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-xs-6 col-lg-5"
+                            value="#{texts.manage_employment_period_yearly_vacation}"></h:outputLabel>
+
+                        <div class="col-xs-6 col-lg-5">
+                            <h:inputText styleClass="form-control"
+                                id="yearlyVacation"
+                                a:placeholder="#{texts.manage_employment_period_yearly_vacation_placeholder}"
+                                value="#{manageEmploymentPeriodsBean.selectedEmploymentPeriod.yearlyVacationDays}"
+                                a:required="true"
+                                converter="javax.faces.Double" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-xs-6 col-lg-5"
+                            value="#{texts.manage_employment_period_daily_working_hours}"></h:outputLabel>
+
+                        <div class="col-xs-6 col-lg-5">
+                            <h:inputText styleClass="form-control"
+                                id="dailyWorkingHours"
+                                a:placeholder="#{texts.manage_employment_period_daily_working_hours_placeholder}"
+                                value="#{manageEmploymentPeriodsBean.selectedEmploymentPeriod.dailyWorkingHours}"
+                                a:required="true">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:inputText>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-6 col-lg-5">
+                            <h:commandButton
+                                value="#{texts.manage_employment_period_submit}"
+                                action="#{manageEmploymentPeriodsBean.submit}"
+                                styleClass="btn btn-info btn-sm" />
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{validateAbsenceBean.onLoad()}" />
+        </f:metadata>
+
+        <h:form role="form">
+            <div class="page-tables">
+                <div class="page-tables">
+                    <h:outputLabel>
+                        <H4>#{texts.unvalidated_abcenses_overview}</H4>
+                    </h:outputLabel>
+                    <div class="table-responsive">
+
+                        <h:dataTable class="table table-hover"
+                            value="#{validateAbsenceBean.allAbsences}"
+                            var="absence">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_person_nachname}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{absence.person.employee.lastName}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_person_vorname}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{absence.person.employee.firstName}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_person_vorname}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{absence.assignedAbsenceType.name}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_abwesenheitsbeginn}" />
+                                </f:facet>
+
+                                <h:outputText value="#{absence.start}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_abwesenheitsende}" />
+                                </f:facet>
+
+                                <h:outputText value="#{absence.end}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_comment}" />
+                                </f:facet>
+
+                                <h:outputText value="#{absence.comment}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateAbsence_is_verified}" />
+                                </f:facet>
+
+                                <h:selectBooleanCheckbox
+                                    value="#{absence.isVerified}" />
+                            </h:column>
+                        </h:dataTable>
+
+                        <H3>
+                            <h:outputText
+                                value="#{validateAbsenceBean.noAbsencesFound}"></h:outputText>
+                        </H3>
+
+                        <div class="btn-toolbar">
+                            <h:commandButton
+                                value="#{texts.validate_absences}"
+                                action="#{validateAbsenceBean.submitValidation}"
+                                styleClass="btn btn-info btn-sm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

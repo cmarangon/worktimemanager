@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+
+    <!-- OVERVIEWABSENCE.XHTML -->
+    <f:metadata>
+        <f:viewAction action="#{manageAbsenceBean.onLoad}" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form role="form">
+            <div class="page-tables">
+                <h:outputLabel>
+                    <H4>#{texts.overviewAbsence_label_absenceOverview}</H4>
+                </h:outputLabel>
+                <div class="table-responsive">
+
+                    <!-- DATA TABLE ANFANG -->
+                    <h:dataTable
+                        value="#{manageAbsenceBean.absenceList}"
+                        var="absence" class="table table-hover">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_id}" />
+                            </f:facet>
+                            <h:outputText value="#{absence.id}" />
+
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_absenceType}" />
+                            </f:facet>
+                            <h:outputText
+                                value="#{absence.assignedAbsenceType.name}">
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_comment}" />
+                            </f:facet>
+                            <h:outputText value="#{absence.comment}">
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_startDate}" />
+                            </f:facet>
+                            <h:outputText value="#{absence.start}">
+                                <f:convertDateTime pattern="dd.MM.yyyy" />
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_durationHours}" />
+                            </f:facet>
+                            <h:outputText
+                                value="#{absence.durationHours}">
+                                <f:convertDateTime pattern="HH.mm 'h'" />
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_isVerified}" />
+                            </f:facet>
+                            <h:selectBooleanCheckbox disabled="true"
+                                id="isVerified" readonly="true"
+                                value="#{absence.isVerified}" />
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText
+                                    value="#{texts.overviewAbsence_label_delete}" />
+                            </f:facet>
+                            
+                            
+                              <h:commandLink id="delete"
+                                action="#{manageAbsenceBean.deleteAbsence(absence)}">
+                                <button class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </h:commandLink>
+                            
+                            
+                          
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Bearbeiten" />
+                            </f:facet>
+
+                            <h:commandLink id="edit"
+                                action="#{manageAbsenceBean.selectRow(absence)}">
+                                <button class="btn btn-xs btn-info">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </h:commandLink>
+                        </h:column>
+
+                    </h:dataTable>
+                    <!-- DATA TABLE ENDE -->
+
+                    <!-- MESSAGE ANFANG -->
+                    <h:panelGroup
+                        rendered="#{not empty facesContext.messageList}"
+                        class="alert alert-danger" role="alert"
+                        layout="block">
+                        <h:messages globalOnly="true"
+                            errorClass="errorMessage"
+                            infoClass="infoMessage" layout="table"
+                            showDetail="false" showSummary="true" />
+                    </h:panelGroup>
+                    <!-- MESSAGE ENDE -->
+
+                    <!-- BUTTON ANFANG -->
+                    <div class="btn-toolbar">
+                        <h:commandButton
+                            value="#{texts.overviewAbsence_button_createNewAbsence}"
+                            action="manageAbsence.xhtml"
+                            styleClass="btn btn-info btn-sm" />
+                    </div>
+                    <!-- BUTTON ENDE -->
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

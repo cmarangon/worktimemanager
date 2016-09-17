@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{loginBean.onLoad}" />
+        </f:metadata>
+
+        <!-- manageAbsence form -->
+        <h:form role="form">
+
+            <div class="container">
+                <h:outputLabel>
+                    <H1>#{texts.closeFiscalPeriod_label_closeFiscalPeriodEmployees}</H1>
+                </h:outputLabel>
+                <br></br>
+                <h:dataTable value="#{fiscalPeriodBean.personDetails}"
+                    var="personDetail" styleClass="table table-striped">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Vorname / Name" />
+                        </f:facet>
+                        <h:outputText
+                            value="#{personDetail.person.firstName} #{personDetail.person.lastName}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="IST-Stunden" />
+                        </f:facet>
+                        <h:outputText
+                            value="#{personDetail.workedHours}">
+                            <f:convertNumber pattern="0.0 h"></f:convertNumber>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="SOLL-Stunden" />
+                        </f:facet>
+                        <h:outputText
+                            value="#{personDetail.workingHours}">
+                            <f:convertNumber pattern="0.0 h"></f:convertNumber>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Gültige Stempelungen" />
+                        </f:facet>
+                        <h:selectBooleanCheckbox readonly="true" disabled="true"
+                            value="#{personDetail.hasValidStampings}"></h:selectBooleanCheckbox>
+                    </h:column>
+                </h:dataTable>
+
+
+                <!-- Fehlermeldung anzeigen -->
+                <h:panelGroup
+                    rendered="#{not empty facesContext.messageList}"
+                    class="alert alert-danger" role="alert"
+                    layout="block">
+                    <h:messages globalOnly="false"
+                        errorClass="errorMessage"
+                        infoClass="infoMessage" layout="table"
+                        showDetail="false" showSummary="true" />
+                </h:panelGroup>
+                <!-- Fehlermeldung anzeigen ENDE -->
+
+                <h:commandButton value="#{texts.button_back}"
+                    it="buttonBack"
+                    action="#{fiscalPeriodBean.backToSelection}"
+                    styleClass="btn btn-info btn-sm" />
+                <h:commandButton
+                    value="#{texts.closeFiscalPeriod_button_close}"
+                    id="buttonContinue"
+                    action="#{fiscalPeriodBean.closePeriod}"
+                    styleClass="btn btn-info btn-sm" rendered="#{fiscalPeriodBean.hasValidStampings}" />
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

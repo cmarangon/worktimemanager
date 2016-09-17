@@ -1,0 +1,8 @@
+/.settings/
+/target/
+.classpath
+.project
+.DS_Store
+/bin/
+/hs_err_pid9880.log
+/replay_pid9880.log

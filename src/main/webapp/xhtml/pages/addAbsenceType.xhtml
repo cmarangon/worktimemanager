@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <!-- ADDABSENCETYPE.XHTML -->
+    <ui:define name="content">
+        <h:form role="form">
+            <div class="container">
+
+                <!-- ÜBERSCHRIFT ANFANG -->
+                <h:outputLabel>
+                    <H1>#{texts.addAbsenceType_label_manageAbsenceType}</H1>
+                </h:outputLabel>
+                <br></br> <br></br>
+                <!--    ÜBERSCHRIFT ENDE -->
+
+                <!-- TEXTFELD ANFANG -->
+                <h:outputLabel>#{texts.addAbsenceType_label_addAbsenceType}</h:outputLabel>
+                <br></br>
+                <h:inputText id="addAbsence"
+                    value="#{manageAbsenceTypeBean.absenceType.name}"
+                    type="text">
+                    <h:message id="addAbsenceMsg" for="addAbsence"
+                        style="color: red" />
+                </h:inputText>
+                <!-- TEXTFELD ENDE -->
+
+                <!-- MELDUNG ANZEIGEN -->
+                <h:panelGroup
+                    rendered="#{not empty facesContext.messageList}"
+                    class="alert alert-danger" role="alert"
+                    layout="block">
+                    <h:messages globalOnly="false"
+                        errorClass="errorMessage"
+                        infoClass="infoMessage" layout="table"
+                        showDetail="false" showSummary="true" />
+                </h:panelGroup>
+                <!-- MELDUNG ANZEIGEN ENDE -->
+
+                <!-- BUTTONS ANFANG -->
+                <div class="btn-toolbar">
+                    <h:commandButton
+                        value="#{texts.addAbsenceType_button_save}"
+                        action="#{manageAbsenceTypeBean.checkIfAbsenceTypeExisting}"
+                        styleClass="btn btn-info btn-sm" />
+
+                    <h:commandButton
+                        value="#{texts.addAbsenceType_button_showAbsenceTypeOverview}"
+                        action="#{manageAbsenceTypeBean.goToAbsenceTypeOverview}"
+                        styleClass="btn btn-info btn-sm" immediate="true" />
+                </div>
+                <!-- BUTTONS ENDE -->
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

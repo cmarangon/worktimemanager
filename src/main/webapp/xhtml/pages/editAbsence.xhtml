@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+
+    <!-- EDIT ABSENCE:XHTML -->
+    <f:metadata>
+        <f:viewAction action="#{manageAbsenceTypeBean.onLoad}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <!-- manageAbsence form -->
+        <h:form role="form">
+
+            <div class="container">
+                <h:outputLabel>
+                    <H1>#{texts.editAbsence_label_editAbsence}</H1>
+                </h:outputLabel>
+                <br></br>
+
+
+                <!-- ERSTER DATEPICKER ANFANG -->
+                <h:outputLabel>#{texts.editAbsence_label_absenceFrom}</h:outputLabel>
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <div class='input-group date date_picker'
+                                id=''>
+                                <h:inputText type='text'
+                                    class="form-control"
+                                    value="#{manageAbsenceBean.foundAbsence.start}">
+                                    <f:convertDateTime
+                                        pattern="dd.MM.yyyy" />
+                                </h:inputText>
+                                <span class="input-group-addon">
+                                    <span
+                                    class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ERSTER DATEPICKER ENDE -->
+
+
+                <!-- ZWEITER DATEPICKER ANFANG -->
+                <h:outputLabel>#{texts.editAbsence_label_absenceFrom}</h:outputLabel>
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <div class='input-group date date_picker'
+                                id=''>
+                                <h:inputText type='text'
+                                    class="form-control"
+                                    value="#{manageAbsenceBean.foundAbsence.end}">
+                                    <f:convertDateTime
+                                        pattern="dd.MM.yyyy" />
+                                </h:inputText>
+                                <span class="input-group-addon">
+                                    <span
+                                    class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ZWEITER DATEPICKER ENDE -->
+
+
+
+                <!-- KOMMENTAR ANFANG -->
+                <h:outputLabel>#{texts.editAbsence_label_comment}</h:outputLabel>
+                <br></br>
+                <h:inputTextarea id="comment"
+                    value="#{manageAbsenceBean.foundAbsence.comment}"
+                    type="text" />
+                <br></br> <br></br>
+                <!-- KOMMENTAR ENDE -->
+
+                <!-- ABWESENHEITSDAUER ANFANG -->
+                <h:outputLabel>#{texts.editAbsence_label_absenceDuration}</h:outputLabel>
+                <br></br>
+                <h:inputText id="durationHours"
+                    value="#{manageAbsenceBean.foundAbsence.durationHours}">
+                    <f:convertDateTime pattern="HH:mm" />
+                </h:inputText>
+                <br></br> <br></br>
+                <!-- ABWESENHEITSDAUER ENDE -->
+
+                <!-- DROPDOWN ABSENZTYP ANFANG -->
+                <h:outputLabel>#{texts.editAbsence_label_absenceReason}</h:outputLabel>
+                <br></br>
+                <div class="btn-group open">
+
+                    <h:selectOneMenu
+                        value="#{manageAbsenceBean.foundAbsence.assignedAbsenceType}"
+                        converter="#{userConverterBean}"
+                        styleClass="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="true">
+                        <f:selectItems
+                            value="#{manageAbsenceBean.absenceTypeList}"
+                            var="absenceType"
+                            itemValueAsString="#{absenceType.id}"
+                            itemLabel="#{absenceType.name}" />
+                    </h:selectOneMenu>
+                </div>
+                <br></br> <br></br>
+                <!-- DROPDOWN ABSENZTYP ENDE -->
+
+                <!-- MESSAGES ANFANG -->
+                <h:panelGroup
+                    rendered="#{not empty facesContext.messageList}"
+                    class="alert alert-danger" role="alert"
+                    layout="block">
+                    <h:messages globalOnly="false"
+                        errorClass="errorMessage"
+                        infoClass="infoMessage" layout="table"
+                        showDetail="false" showSummary="true" />
+                </h:panelGroup>
+                <!-- MESSAGES ENDE -->
+
+                <!-- BUTTONS ANFANG -->
+                <div class="btn-toolbar">
+                    <h:commandButton
+                        value="#{texts.editAbsence_button_save}"
+                        action="#{manageAbsenceBean.editAbsence}"
+                        styleClass="btn btn-info btn-sm" />
+
+
+                    <h:commandButton
+                        value="#{texts.editAbsence_button_cancel}"
+                        action="overviewAbsence" immediate="true"
+                        styleClass="btn btn-info btn-sm" />
+                </div>
+                <!-- BUTTONS ENDE -->
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

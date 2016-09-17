@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{loginBean.onLoad}" />
+        </f:metadata>
+
+
+        <div class="page-content">
+
+
+            <div class="single-head">
+                <h3 class="pull-left">
+                    <i class="fa fa-building-o"></i>Mandant erfassen
+                </h3>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            <script>
+                if(typeof wtm == 'undefined') {
+                    var wtm = {};
+                    wtm.functions = {};
+                    wtm.functions.client = {
+                        monitor : function(data) {
+                            // do nothing
+                        },
+                        error : function(data) {
+                            var form = $("input[id$='client_name']").parents("form");
+                            var form_val = form.validate();
+                            var errors = new Object();
+                            errors[$("input[id$='client_name']").attr("id")] = texts["manageClient_error_label_clientExists"];
+                            form_val.showErrors(errors);
+                        }
+                    };
+                }
+            </script>
+            <div class="page-form">
+                <h:form styleClass="form-horizontal">
+                    <div
+                        id="manageClientForm"
+                        class="wizard clearfix">
+
+
+                        <!-- Mandant erfassen -->
+                        <h2>Mandant</h2>
+                        <div>
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_name">Name *</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="client_name"
+                                        styleClass="form-control required"
+                                        a:placeholder="Abbey Road Studios"
+                                        a:required="true"
+                                        value="#{manageClientBean.client.companyName}">
+                                        <f:ajax
+                                            event="blur"
+                                            listener="#{manageClientBean.checkCompanynameAvailability}"
+                                            onerror="wtm.functions.client.error"
+                                            onevent="wtm.functions.client.monitor" />
+                                    </h:inputText>
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_active">Status</h:outputLabel>
+                                <div class="col-lg-10 sw-blue">
+                                    <h:selectBooleanCheckbox
+                                        id="client_active"
+                                        styleClass="on-off-switch"
+                                        value="#{manageClientBean.client.active}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">* Pflichtfeld</div>
+                            </div>
+                        </div>
+
+
+                        <!-- Mandant optional erfassen -->
+                        <h2>Mandant (optional)</h2>
+                        <div>
+
+                            <!-- Strasse -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_street">Strasse</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="client_street"
+                                        styleClass="form-control"
+                                        a:placeholder="3 Abbey Rd"
+                                        value="#{manageClientBean.client.street}" />
+                                </div>
+                            </div>
+
+                            <!-- PLZ / Stadt -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_postalcode">PLZ / Stadt</h:outputLabel>
+                                <div class="col-xs-4 col-lg-4">
+                                    <h:inputText
+                                        id="client_postalcode"
+                                        styleClass="form-control"
+                                        a:placeholder="NW8 9AY"
+                                        value="#{manageClientBean.client.postalCode}" />
+                                </div>
+                                <div class="col-xs-8 col-lg-6">
+                                    <h:inputText
+                                        id="client_city"
+                                        styleClass="form-control"
+                                        a:placeholder="London"
+                                        value="#{manageClientBean.client.city}" />
+                                </div>
+                            </div>
+
+                            <!-- Land -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_country">Land</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="client_country"
+                                        styleClass="form-control"
+                                        a:placeholder="Grossbritannien"
+                                        value="#{manageClientBean.client.country}" />
+                                </div>
+                            </div>
+
+                            <!-- Tel. -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_phone">Tel.</h:outputLabel>
+                                <div class="col-lg-10 ">
+                                    <h:inputText
+                                        id="client_phone"
+                                        styleClass="form-control"
+                                        a:placeholder="+44 20 7266 7000"
+                                        value="#{manageClientBean.client.generalOfficePhone}" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Administrator erfassen -->
+                        <h2>Administrator</h2>
+                        <div>
+
+                            <!-- Vor- / Nachname. -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_firstname">Vor-/ Nachname *</h:outputLabel>
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        id="admin_firstname"
+                                        styleClass="form-control"
+                                        a:placeholder="George"
+                                        value="#{manageClientBean.administrator.firstName}"
+                                        a:required="true" />
+                                </div>
+                                <div class="col-xs-6 col-lg-5">
+                                    <h:inputText
+                                        id="admin_lastname"
+                                        styleClass="form-control"
+                                        a:placeholder="Martin"
+                                        value="#{manageClientBean.administrator.lastName}"
+                                        a:required="true" />
+                                </div>
+                            </div>
+
+                            <!-- E-Mailadresse -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_email">E-Mailadresse *</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="admin_email"
+                                        styleClass="form-control"
+                                        a:placeholder="g.martin@abbeyroad.co.uk"
+                                        a:type="email"
+                                        value="#{manageClientBean.administrator.email}"
+                                        a:required="true" />
+                                </div>
+                            </div>
+
+                            <!-- Geburtsdatum -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_birthdate">Geburtsdatum *</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <div class="input-group date date_picker">
+                                        <h:inputText
+                                            id="admin_birthdate"
+                                            styleClass="form-control"
+                                            a:placeholder="03.01.1926"
+                                            value="#{manageClientBean.administrator.birthDate}"
+                                            a:required="true">
+                                            <f:convertDateTime pattern="dd.MM.yyyy" />
+                                        </h:inputText>
+                                        <span class="input-group-addon"> <span
+                                            class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Eintrittsdatum -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_commencementDate">Eintrittsdatum *</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <div class="input-group date date_picker">
+                                        <h:inputText
+                                            id="admin_commencementDate"
+                                            styleClass="form-control"
+                                            a:placeholder="06.06.1962"
+                                            value="#{manageClientBean.administrator.commencementDate}"
+                                            a:required="true">
+                                            <f:convertDateTime pattern="dd.MM.yyyy" />
+                                        </h:inputText>
+                                        <span class="input-group-addon"> <span
+                                            class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">* Pflichtfeld</div>
+                            </div>
+                        </div>
+
+
+                        <!-- Administrator optional erfassen -->
+                        <h2>Administrator (optional)</h2>
+                        <div>
+
+                            <!-- Tel. -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_businessphone">Tel. intern</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="admin_businessphone"
+                                        styleClass="form-control"
+                                        a:placeholder="+44 20 7266 7000"
+                                        a:type="tel"
+
+                                        value="#{manageClientBean.administrator.businessPhoneNumber}" />
+                                </div>
+                            </div>
+
+                            <!-- Abteilung -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_department">Abteilung</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="admin_department"
+                                        styleClass="form-control"
+                                        a:placeholder="Creative"
+                                        value="#{manageClientBean.administrator.departmentName}" />
+                                </div>
+                            </div>
+
+                            <!-- Strasse -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_street">Strasse</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="admin_street"
+                                        styleClass="form-control"
+                                        a:placeholder="3 Abbey Rd"
+                                        value="#{manageClientBean.administrator.street}" />
+                                </div>
+                            </div>
+
+                            <!-- PLZ / Stadt -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_postalcode">PLZ / Stadt</h:outputLabel>
+                                <div class="col-xs-4 col-lg-4">
+                                    <h:inputText
+                                        id="admin_postalcode"
+                                        styleClass="form-control"
+                                        a:placeholder="NW8 9AY"
+                                        value="#{manageClientBean.administrator.postalCode}" />
+                                </div>
+                                <div class="col-xs-8 col-lg-6">
+                                    <h:inputText
+                                        id="admin_city"
+                                        styleClass="form-control"
+                                        a:placeholder="London"
+                                        value="#{manageClientBean.administrator.city}" />
+                                </div>
+                            </div>
+
+                            <!-- Land -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_country">Land</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="admin_country"
+                                        styleClass="form-control"
+                                        a:placeholder="Grossbritannien"
+                                        value="#{manageClientBean.administrator.country}" />
+                                </div>
+                            </div>
+
+                            <!-- Tel. -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="admin_privatephone">Tel. privat</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="admin_privatephone"
+                                        styleClass="form-control"
+                                        a:placeholder="+44 20 7266 7000"
+                                        value="#{manageClientBean.administrator.privatePhoneNumber}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h:commandButton
+                        style="display:none;"
+                        id="hidden_jsf_submit"
+                        action="#{manageClientBean.save}"></h:commandButton>
+                </h:form>
+            </div>
+
+
+        </div>
+
+    </ui:define>
+</ui:composition>

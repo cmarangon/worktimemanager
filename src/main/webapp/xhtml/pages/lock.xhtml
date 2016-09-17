@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:t="http://myfaces.apache.org/tomahawk"
+    template="../templates/blank_structure_template.xhtml">
+
+    <ui:define name="content">
+
+
+
+
+
+
+        <!-- Lock page -->
+        <div class="lock-block br-lblue">
+            <div class="inner-lock-block">
+
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="lock-user-pic">
+                            <a href="#"><img
+                                src="#{resource['style/img/user.png']}"
+                                alt="" class="img-responsive" /></a>
+                        </div>
+                    </div>
+                    <h:form role="form" action="index.html">
+                        <div class="col-md-7">
+                            <div class="unlock-form">
+                                <h5>
+                                    <h:outputLabel
+                                        value="#{loginBean.loggedInPerson.firstName} #{loginBean.loggedInPerson.lastName}"></h:outputLabel>
+                                </h5>
+                                <p>#{texts.lock_label_absenceMessage}</p>
+
+                                <h:inputSecret type="password"
+                                    class="form-control" id="password"
+                                    value="#{loginBean.password}" />
+
+                                <h:panelGroup
+                                    rendered="#{not empty facesContext.messageList}"
+                                    class="alert alert-danger col-md-9"
+                                    role="alert" layout="block">
+                                    <h:messages globalOnly="true"
+                                        errorClass="errorMessage"
+                                        infoClass="infoMessage"
+                                        layout="table"
+                                        showDetail="false"
+                                        showSummary="true" />
+
+                                </h:panelGroup>
+                            </div>
+
+
+                            <br></br>
+                            <h:commandButton
+                                value="#{texts.login_button_label}"
+                                action="#{loginBean.unlockUser}"
+                                class="btn btn-info btn-sm" />
+
+                        </div>
+                    </h:form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+    </ui:define>
+</ui:composition>

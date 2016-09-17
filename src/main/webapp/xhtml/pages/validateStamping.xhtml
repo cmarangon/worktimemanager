@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{validateStampingBean.onLoad()}" />
+        </f:metadata>
+
+        <h:form role="form">
+            <div class="page-tables">
+                <div class="page-tables">
+                    <h:outputLabel>
+                        <H4>#{texts.unvalidated_stampings_overview}</H4>
+                    </h:outputLabel>
+                    <div class="table-responsive">
+
+                        <h:dataTable class="table table-hover"
+                            value="#{validateStampingBean.allStampings}"
+                            var="stamping">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateStamping_surname}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{stamping.assignedPerson.employee.lastName}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateStamping_firstname}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{stamping.assignedPerson.employee.firstName}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateStamping_time}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{stamping.stampingTime}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateStamping_comment}" />
+                                </f:facet>
+
+                                <h:outputText
+                                    value="#{stamping.comment}" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText
+                                        value="#{texts.validateStamping_status}" />
+                                </f:facet>
+
+                                <h:panelGroup>
+                                    <h:selectOneMenu
+                                        styleClass="form-control"
+                                        value="#{stamping.verificationStatus}">
+                                        <f:selectItems
+                                            value="#{validateStampingBean.allVerificationStatus}" />
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+                            </h:column>
+                        </h:dataTable>
+
+                        <H3>
+                            <h:outputText
+                                value="#{validateStampingBean.noStampingsFound}"></h:outputText>
+                        </H3>
+
+                        <div class="btn-toolbar">
+                            <h:commandButton
+                                value="#{texts.validate_stampings}"
+                                action="#{validateStampingBean.submitValidation}"
+                                styleClass="btn btn-info btn-sm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

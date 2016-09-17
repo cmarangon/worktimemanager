@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="./template.xhtml"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="structure">
+
+
+        <div class="outer clearfix">
+            <!-- Sidebar starts -->
+            <div class="sidebar">
+
+                <div class="sidey">
+
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1>
+                            <a href="startSeite.xhtml">
+                                <h:graphicImage
+                                    library="style"
+                                    name="css/images/wtm_icon_very_small.png"></h:graphicImage>
+                                #{texts.applicationName} </a>
+                        </h1>
+                    </div>
+
+                    <!-- Sidebar navigation starts -->
+
+                    <!-- Responsive dropdown -->
+                    <div class="sidebar-dropdown">
+                        <a href="#" class="br-red"><i
+                            class="fa fa-bars"></i></a>
+                    </div>
+
+                    <div class="side-nav">
+
+                        <div class="side-nav-block">
+                            <h:panelGroup layout="block">
+                                <h:form>
+                                    <h:commandButton action="#{stampingBean.setStamp}"
+                                        value="#{stampingBean.isUserStamptIn() ? texts.template_stamp_out : texts.template_stamp_in}" 
+                                        styleClass="btn btn-lg btn-block stamp #{stampingBean.isUserStamptIn() ? 'btn-danger' : 'btn-success'}">
+                                        <c:if test="#{not stampingBean.userCanStamp()}">
+                                            <f:attribute name="disabled" value="#{true}" />
+                                        </c:if>
+                                    </h:commandButton>
+                                    <h:outputText rendered="#{stampingBean.isUserStamptIn()}" value="#{texts.template_stamped_in_on}: #{stampingBean.getLastStampingTime()}" />
+                                </h:form>
+                                <hr />
+                            </h:panelGroup>
+
+                            <!-- Sidebar heading -->
+                            <h4>Main</h4>
+
+                            <!-- Sidebar links -->
+                            <ul class="list-unstyled">
+                                <li><a href="startSeite.xhtml"
+                                    class="#{templateBean.printClasses('overview')}"><i
+                                        class="fa fa-desktop"></i>
+                                        Dashboard </a></li>
+                                <!-- Mainmenu with submenu -->
+                                <li class="has_submenu"><a href="#"><i
+                                        class="fa fa-user"></i>
+                                        #{texts.template_employee} <span
+                                        class="nav-caret fa fa-caret-down"></span></a>
+                                    <!-- Submenu -->
+                                    <ul class="list-unstyled">
+                                        <li><a href="overviewManageStamping.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_employee_correctStamping}</a></li>
+                                        <li><a
+                                            href="manageAbsence.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_employee_captureAbsence}</a></li>
+                                        <li><a href="report.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_employee_createReport}</a></li>
+                                    </ul></li>
+
+                                <!-- Mainmenu with submenu -->
+                                <c:if test="#{loginBean.isSuperior()}">
+                                <li class="has_submenu"><a href="#"><i
+                                        class="fa fa-file-text-o"></i>
+                                        #{texts.template_superior} <span
+                                        class="nav-caret fa fa-caret-down"></span></a>
+                                    <!-- Submenu -->
+                                    <ul class="list-unstyled">
+                                        <li><a href="validateAbsence.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_superior_verifyAbsence}</a></li>
+                                        <li><a href="validateStamping.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_superior_verifyStamping}</a></li>
+                                        <li><a
+                                            href="manageStamping.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_superior_correctStamping}</a></li>
+                                    </ul></li>
+                                </c:if>
+
+                                <!-- Mainmenu with submenu -->
+                                <c:if test="#{loginBean.isAdmin()}">
+                                <li class="has_submenu"><a href="#"><i
+                                        class="fa fa-building"></i>
+                                        #{texts.template_admin} <span
+                                        class="nav-caret fa fa-caret-down"></span></a>
+                                    <!-- Submenu -->
+                                    <ul class="list-unstyled">
+                                        <li><a href="closeFiscalPeriod.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_admin_completeYear}</a></li>
+                                        <li><a
+                                            href="manageEmployees.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_masterData_employee}</a></li>
+                                        <li><a
+                                            href="publicHolidays.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_masterData_feast}</a></li>
+                                        <li><a
+                                            href="overviewAbsenceType.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_masterData_absence}</a></li>
+                                        <li><a
+                                            href="manageMetaData.xhtml"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_masterData_masterData}</a></li>
+                                    </ul>
+                                </li>
+                                </c:if>
+
+                                <!-- Mainmenu with submenu -->
+                                <c:if test="#{loginBean.isSysAdmin()}">
+                                <li class="has_submenu"><a href="#"><i
+                                        class="fa fa-gear"></i>
+                                        #{texts.template_sysadmin} <span
+                                        class="nav-caret fa fa-caret-down"></span></a>
+                                    <!-- Submenu -->
+                                    <ul class="list-unstyled">
+                                        <li><a
+                                            href="overviewClient.xhtml"
+                                            class="#{templateBean.printClasses('manageClient')}"><i
+                                                class="fa fa-angle-double-right"></i>
+                                                #{texts.template_sysadmin_manageClients}
+                                        </a></li>
+                                    </ul>
+                                </li>
+                                </c:if>
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Sidebar navigation ends -->
+
+                </div>
+            </div>
+
+
+            <!-- Mainbar head starts -->
+            <div class="mainbar">
+                <div class="main-head">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-4">
+                                <!-- Page title -->
+                                <h2>
+                                    <i class="fa fa-desktop lblue"></i>
+                                    Dashboard
+                                </h2>
+                            </div>
+
+                            <div class="col-md-3 hidden-xs"></div>
+
+                            <div class="col-md-3 col-xs-4">
+                                <c:if test="#{loginBean.isSysAdmin()}">
+                                <h:form>
+                                    <h:selectOneMenu value="#{loginBean.pretendedClient}" styleClass="form-control pretended-client">
+                                        <f:selectItems value="#{loginBean.getClients()}" var="client" itemValue="#{client}" itemLabel="#{client.companyName}" />
+                                        <f:converter converterId="ch.hftm.wtm.customConverter.ClientConverter" />
+                                        <f:ajax render="@all" />
+                                    </h:selectOneMenu>
+                                </h:form>
+                                </c:if>
+                            </div>
+
+
+                            <div class="col-md-3 col-xs-4">
+                                <!-- Head user -->
+                                <div
+                                    class="head-user dropdown pull-right">
+                                    <a href="#" data-toggle="dropdown"
+                                        id="profile">
+                                        #{loginBean.loggedInPerson.firstName}
+                                        #{loginBean.loggedInPerson.lastName}
+                                        <i class="fa fa-caret-down"></i>
+                                    </a>
+                                    <!-- Dropdown -->
+                                    <ul class="dropdown-menu"
+                                        aria-labelledby="profile">
+                                        <li>
+                                            <h:form>
+                                                <h:commandLink action="#{loginBean.lockUser}">
+                                                    Lock
+                                                    <span class="fa fa-lock pull-right"></span>
+                                                </h:commandLink>
+                                            </h:form>
+                                        </li>
+                                        <li>
+                                            <h:form>
+                                                <h:commandLink action="#{loginBean.logOut}">
+                                                    Sign Out
+                                                    <span class="fa fa-sign-out pull-right"></span>
+                                                </h:commandLink>
+                                            </h:form>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content"pages" in das Template einfügen -->
+                <div class="main-content clearfix">
+                    <h:messages globalOnly="false" errorClass="errorMessage"
+                            infoClass="infoMessage" layout="table" showDetail="false"
+                            showSummary="true" />
+                    <ui:insert name="content" id="content" />
+                </div>
+            </div>
+            <!-- Mainbar head ends -->
+
+
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{reportBean.onLoad}" />
+    </f:metadata>
+
+
+    <ui:define name="content">
+
+
+        <h:form role="form">
+
+            <div class="container">
+                <h:outputLabel>
+                    <H1>#{texts.report_report}</H1>
+                </h:outputLabel>
+                <br></br>
+                <!-- Erster Datepicker -->
+                <h:outputLabel>#{texts.report_from}</h:outputLabel>
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <div class='input-group date date_picker'
+                                id=''>
+                                <h:inputText type='text'
+                                    class="form-control"
+                                    value="#{reportBean.fromDate}">
+                                    <f:convertDateTime
+                                        pattern="dd.MM.yyyy" />
+                                </h:inputText>
+                                <span class="input-group-addon">
+                                    <span
+                                    class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- Erster Datepicker -->
+                <h:outputLabel>#{texts.report_till}</h:outputLabel>
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <div class='input-group date date_picker'
+                                id=''>
+                                <h:inputText type='text'
+                                    styleClass="form-control"
+                                    value="#{reportBean.tillDate}">
+                                    <f:convertDateTime
+                                        pattern="dd.MM.yyyy" />
+                                </h:inputText>
+                                <span class="input-group-addon">
+                                    <span
+                                    class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Liste der unterstellten Mitarbeiter -->
+
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <h:panelGroup
+                                rendered="#{not empty reportBean.employeeList}">
+                                <h:selectOneMenu
+                                    value="#{reportBean.chosenUser}"
+                                    style="input-group"
+                                    styleClass="form-control">
+                                    <f:selectItem 
+                                        itemLabel="Eigener Report" />
+                                    <f:selectItems
+                                        value="#{reportBean.employeeList}"
+                                        var="person"
+                                        itemLabel="#{person.email}"
+                                        itemValue="#{person}" />
+                                    <f:converter
+                                        converterId="ch.hftm.wtm.customConverter.PersonConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Errors anzeigen -->
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <h:panelGroup
+                                rendered="#{not empty facesContext.messageList}"
+                                class="alert alert-danger" role="alert"
+                                layout="block">
+                                <h:messages globalOnly="false"
+                                    errorClass="errorMessage"
+                                    infoClass="infoMessage"
+                                    layout="table" showDetail="false"
+                                    showSummary="true" />
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Submit Buttons -->
+                <div class="btn-toolbar">
+                    <h:commandButton value="#{texts.report_get_preview}"
+                        styleClass="btn btn-info btn-sm"
+                        action="#{reportBean.generatePreview}" />
+
+                    <h:commandButton value="#{texts.report_get_report}"
+                        styleClass="btn btn-info btn-sm"
+                        action="#{reportBean.generateReport}" />
+                </div>
+
+                <!-- Anteige der Vorschau -->
+                <DIV class="fixedPreview">
+                    <h:outputText value="#{reportBean.htmlPreview}"
+                        escape="false" />
+                </DIV>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

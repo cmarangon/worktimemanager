@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{loginBean.onLoad}" />
+        </f:metadata>
+
+        <!-- manageAbsence form -->
+        <h:form role="form">
+
+            <div class="container">
+                <h:outputLabel>
+                    <H1>#{texts.closeFiscalPeriod_label_closeFiscalPeriod}</H1>
+                </h:outputLabel>
+                <br></br>
+                <!-- Periode auswählen -->
+                <h:outputLabel>#{texts.closeFiscalPeriod_label_selectPeriodDropDown}</h:outputLabel>
+                <div class="row">
+                    <div class='col-sm-5'>
+                        <div class="form-group">
+                            <div class="btn-group open">
+
+                                <!-- value="#{fiscalPeriodBean.selectedFiscalPeriod}" -->
+                                <h:selectOneMenu id="dropDownFiscalPeriod"
+                                    value="#{fiscalPeriodBean.selectedFiscalPeriod}"
+                                    converter="#{fiscalPeriodTypeConverter}"
+                                    styleClass="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown" aria-expanded="true">
+                                    <f:selectItems
+                                        value="#{fiscalPeriodBean.fiscalPeriods}"
+                                        var="fiscalPeriod"
+                                        itemValueAsString="#{fiscalPeriod.id}"
+                                        itemLabel="#{fiscalPeriod.startDate} bis #{fiscalPeriod.endDate}" />
+
+                                </h:selectOneMenu>
+
+                            </div>
+                            <br></br> <br></br>
+                        </div>
+                    </div>
+                </div>
+                <!-- Periode Dropdown Ende -->
+
+                <!-- Fehlermeldung anzeigen -->
+                <h:panelGroup
+                    rendered="#{not empty facesContext.messageList}"
+                    class="alert alert-danger" role="alert"
+                    layout="block">
+                    <h:messages globalOnly="false"
+                        errorClass="errorMessage"
+                        infoClass="infoMessage" layout="table"
+                        showDetail="false" showSummary="true" />
+                </h:panelGroup>
+                <!-- Fehlermeldung anzeigen ENDE -->
+                
+                <h:commandButton value="#{texts.button_continue}" id="buttonContinue"
+                    action="#{fiscalPeriodBean.showEmployeeOverview}"
+                    styleClass="btn btn-info btn-sm" />
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
