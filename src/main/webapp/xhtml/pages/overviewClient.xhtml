@@ -39,9 +39,7 @@
                                     Name
                                 </f:facet>
                                 <h:panelGroup>
-                                    <h:form>
-                                        <h:commandLink value="#{client.companyName}" action="#{manageClientBean.editClient(client)}" />
-                                    </h:form>
+                                    <h:commandLink value="#{client.companyName}" action="#{manageClientBean.setSelectedClient(client)}" />
                                 </h:panelGroup>
                             </h:column>
                             <h:column>
@@ -59,16 +57,14 @@
                                     Status
                                 </f:facet>
                                 <h:panelGroup>
-                                    <h:form>
-                                        <div class="sw-blue">
-                                            <h:selectBooleanCheckbox
-                                                id="client_active"
-                                                styleClass="on-off-switch"
-                                                value="#{client.active}">
-                                                <f:ajax listener="#{manageClientBean.setActiveStatus}" />
-                                            </h:selectBooleanCheckbox>
-                                        </div>
-                                    </h:form>
+                                    <div class="sw-blue">
+                                        <h:selectBooleanCheckbox
+                                            id="client_active"
+                                            styleClass="on-off-switch"
+                                            value="#{client.active}">
+                                            <f:ajax listener="#{manageClientBean.setActiveStatus}" />
+                                        </h:selectBooleanCheckbox>
+                                    </div>
                                 </h:panelGroup>
                             </h:column>
                         </h:dataTable>

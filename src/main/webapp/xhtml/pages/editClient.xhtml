@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    template="../templates/default_structure_template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{loginBean.onLoad()}" />
+        </f:metadata>
+    
+        <div class="page-content">
+
+
+            <div class="single-head">
+                <h3 class="pull-left">
+                    <i class="fa fa-building-o"></i>#{manageClientBean.selectedClient.companyName}
+                </h3>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="page-form">
+                <h:form styleClass="form-horizontal">
+                    <div
+                        id="manageClientForm"
+                        class="clearfix">
+
+                        <div>
+
+                            <!-- Strasse -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_street">Strasse</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="client_street"
+                                        styleClass="form-control"
+                                        a:placeholder="3 Abbey Rd"
+                                        value="#{manageClientBean.selectedClient.street}" />
+                                </div>
+                            </div>
+
+                            <!-- PLZ / Stadt -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_postalcode">PLZ / Stadt</h:outputLabel>
+                                <div class="col-xs-4 col-lg-4">
+                                    <h:inputText
+                                        id="client_postalcode"
+                                        styleClass="form-control"
+                                        a:placeholder="NW8 9AY"
+                                        value="#{manageClientBean.selectedClient.postalCode}" />
+                                </div>
+                                <div class="col-xs-8 col-lg-6">
+                                    <h:inputText
+                                        id="client_city"
+                                        styleClass="form-control"
+                                        a:placeholder="London"
+                                        value="#{manageClientBean.selectedClient.city}" />
+                                </div>
+                            </div>
+
+                            <!-- Land -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_country">Land</h:outputLabel>
+                                <div class="col-lg-10">
+                                    <h:inputText
+                                        id="client_country"
+                                        styleClass="form-control"
+                                        a:placeholder="Grossbritannien"
+                                        value="#{manageClientBean.selectedClient.country}" />
+                                </div>
+                            </div>
+
+                            <!-- Tel. -->
+                            <div class="form-group">
+                                <h:outputLabel
+                                    styleClass="col-xs-12 col-lg-2"
+                                    for="client_phone">Tel.</h:outputLabel>
+                                <div class="col-lg-10 ">
+                                    <h:inputText
+                                        id="client_phone"
+                                        styleClass="form-control"
+                                        a:placeholder="+44 20 7266 7000"
+                                        value="#{manageClientBean.selectedClient.generalOfficePhone}" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h:commandButton
+                        value="#{texts.editClient_button_save}"
+                        action="#{manageClientBean.saveSelectedClient}"
+                        styleClass="btn btn-info btn-sm"></h:commandButton>
+                        
+                    <h:commandButton
+                        value="#{texts.editClient_button_back}"
+                        action="#{manageClientBean.toOverview}"
+                        styleClass="btn btn-info btn-sm"></h:commandButton>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
