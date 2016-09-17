@@ -41,15 +41,19 @@ public class ReportBean {
         ReportBusiness reportBusiness;
         getCurrentUser();
         reportBusiness = ReportBusiness.getInstance();
-        reportBusiness.setLoggedinPerson(currentUser);
-        return null;
+        if (currentUser != null) {
+            reportBusiness.setLoggedinPerson(currentUser);
+            return null;
+        }
+
+        return "startSeite.xhtml";
     }
 
     // Buttons GetReport
     /**
      * @return Navigation
      */
-    public String generateReport(){
+    public String generateReport() {
         ReportBusiness reportBusiness = ReportBusiness.getInstance();
         if (fromDate.before(tillDate)) {
             htmlPreview = reportBusiness.createReport(fromDate, tillDate, currentUser, chosenUser, pdfPath());
@@ -66,7 +70,8 @@ public class ReportBean {
     public String generatePreview() {
         ReportBusiness reportBusiness = ReportBusiness.getInstance();
         FacesContext context = FacesContext.getCurrentInstance();
-        String url = context.getApplication().evaluateExpressionGet(context, "#{resource['style:css/images/wtm_icon_small.png']}", String.class);
+        String url = context.getApplication().evaluateExpressionGet(context,
+                "#{resource['style:css/images/wtm_icon_small.png']}", String.class);
         if (fromDate.before(tillDate)) {
             htmlPreview = reportBusiness.createReport(fromDate, tillDate, currentUser, chosenUser, pdfPath());
             htmlPreview = htmlPreview.replace("src=\"\"",
@@ -76,23 +81,23 @@ public class ReportBean {
         return "report.xhtml";
     }
 
-    
     /**
      * @return Pfad wo das PDF vor dem Downlaod abgelegt wird.
      */
     private String pdfPath() {
         String path;
         if (chosenUser == null) {
-            path = System.getProperty("user.home") + "/temp/" + "Report" + currentUser.getFirstName() + currentUser.getLastName() + currentUser.getId()
+            path = System.getProperty("user.home") + "/temp/" + "Report" + currentUser.getFirstName()
+                    + currentUser.getLastName() + currentUser.getId()
                     + ".pdf";
         } else {
-            path = System.getProperty("user.home") + "/temp/" + "Report" + chosenUser.getFirstName() + chosenUser.getLastName() + chosenUser.getId()
+            path = System.getProperty("user.home") + "/temp/" + "Report" + chosenUser.getFirstName()
+                    + chosenUser.getLastName() + chosenUser.getId()
                     + ".pdf";
         }
         return path;
     }
 
-   
     /**
      * Setzt die eingeloggte Person
      */
@@ -100,7 +105,7 @@ public class ReportBean {
         // Eingeloggte Person holen
         currentUser = loginBean.getLoggedInPerson();
 
-        if (currentUser.getEmployees().isEmpty() == false) {
+        if (currentUser != null && currentUser.getEmployees().isEmpty() == false) {
             employeeList.clear();
             employeeList.addAll(currentUser.getEmployees());
         }

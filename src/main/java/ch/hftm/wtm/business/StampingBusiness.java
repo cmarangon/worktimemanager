@@ -82,18 +82,18 @@ public class StampingBusiness {
 
         }
 
-
         return null;
     }
 
     public List<ch.hftm.wtm.model.Stamping> getStamps(Date fromDate, Date untilDate, EmploymentPeriod emPeriod) {
-        
-        //Hole die Stempelungen von dem angegeben Zeitpunkt aus der Datenbank
-        
-        //String zusammenstellen für Abfrage
-        // Beispiel: String attribute = "stampingtime between '2016-08-21 00:00:00' AND '2016-08-21 23:59:59' AND ASSIGNEDPERSON = 99";
-        //**********************************************************
-        //Format bestimmen
+
+        // Hole die Stempelungen von dem angegeben Zeitpunkt aus der Datenbank
+
+        // String zusammenstellen für Abfrage
+        // Beispiel: String attribute = "stampingtime between '2016-08-21 00:00:00' AND '2016-08-21 23:59:59' AND
+        // ASSIGNEDPERSON = 99";
+        // **********************************************************
+        // Format bestimmen
 
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -116,7 +116,6 @@ public class StampingBusiness {
 
         return stampingListe;
     }
-    
 
     /**
      * @param person
@@ -149,26 +148,24 @@ public class StampingBusiness {
 
         //
 
-        //Lade die Daten der Stempelung
-        
-        
-        
-        
+        // Lade die Daten der Stempelung
+
     }
-    
-    //Speichere die neuen Stempelungen ab, falls die Stempelung mehr als 48h zurückliegt, müssen die noch verifiziert werden.¨
-    //Die alten Stempelungen werden noch nicht gelöscht, bis diese Verifiziert worden sind.
+
+    // Speichere die neuen Stempelungen ab, falls die Stempelung mehr als 48h zurückliegt, müssen die noch verifiziert
+    // werden.¨
+    // Die alten Stempelungen werden noch nicht gelöscht, bis diese Verifiziert worden sind.
     public void setEditStamping(ch.hftm.wtm.model.Stamping toEditStamping1, Person id) {
-        
-        //Liegt die zu korrigierende Stempelung mehr als 48h zurück?
-        //Wenn ja, kennzeichnen, dass die Korrektur verifiziert werden muss.
-        
+
+        // Liegt die zu korrigierende Stempelung mehr als 48h zurück?
+        // Wenn ja, kennzeichnen, dass die Korrektur verifiziert werden muss.
+
         System.out.println("In Methode Stamp");
-        
-        //Speichere die Stempelung in die Datenbank
-///        sp.makePersistent(changeStamping);
+
+        // Speichere die Stempelung in die Datenbank
+        /// sp.makePersistent(changeStamping);
         sp.updateStamping(toEditStamping1, id);
-        
+
     }
 
     /*
@@ -186,6 +183,9 @@ public class StampingBusiness {
      * @see ch.hftm.wtm.interfaces.Stamp#isUserStamptIn(ch.hftm.wtm.model.Person)
      */
     public boolean isUserStamptIn(Person person) {
+        if (person == null)
+            return false;
+
         List<Stamping> stampingsToday = new ArrayList<>();
 
         StampingPersistence sp = new StampingPersistence();
